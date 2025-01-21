@@ -316,21 +316,13 @@ jobs:
         if: steps.check_image.outputs.IMAGE_EXISTS == 'false'      
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-
-      - name: Install Promptflow CLI
-        if: steps.check_image.outputs.IMAGE_EXISTS == 'false'
-        run: |
-            python -m pip install --upgrade pip
-            pip install promptflow --upgrade
-            pf --version  
+          python-version: 3.11
 
       - name: Install required dependencies
         if: steps.check_image.outputs.IMAGE_EXISTS == 'false'
         run: | 
-          pip cache purge
-          pip install --upgrade pip setuptools
-          pip install -r src/requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Create flow docker files
         if: steps.check_image.outputs.IMAGE_EXISTS == 'false'
