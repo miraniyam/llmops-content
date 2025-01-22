@@ -3,14 +3,14 @@ import json
 from datetime import datetime
 
 from azure.identity import DefaultAzureCredential
+from azure.ai.projects import AIProjectClient
 from promptflow.client import PFClient
 from promptflow.core import AzureOpenAIModelConfiguration
 from promptflow.evals.evaluate import evaluate
 from promptflow.evals.evaluators import RelevanceEvaluator, FluencyEvaluator, GroundednessEvaluator, CoherenceEvaluator
 
+
 def main():
-
-
     # Read environment variables
     azure_location = os.getenv("AZURE_LOCATION")
     azure_subscription_id = os.getenv("AZURE_SUBSCRIPTION_ID")
@@ -18,15 +18,9 @@ def main():
     azure_project_name = os.getenv("AZUREAI_PROJECT_NAME")
     prefix = os.getenv("PREFIX", datetime.now().strftime("%y%m%d%H%M%S"))[:14] 
 
-    print("AZURE_LOCATION=", azure_location)
-    print("AZURE_SUBSCRIPTION_ID=", azure_subscription_id)
-    print("AZURE_RESOURCE_GROUP=", azure_resource_group)
-    print("AZUREAI_PROJECT_NAME=", azure_project_name)
-    print("PREFIX =", prefix)    
-
-    ##################################
-    ## Base Run
-    ##################################
+    #################################
+    # Base Run
+    #################################
 
     pf = PFClient()
     flow = "./src/" 
@@ -82,32 +76,30 @@ def main():
 
     data = "./responses.jsonl"  # path to the data file
 
-    try:
-        evaluate(
-            evaluation_name=f"{prefix} Quality Evaluation",
-            data=data,
-            evaluators={
-                "Fluency": fluency_evaluator,
-                "Groundedness": groundedness_evaluator,
-                "Relevance": relevance_evaluator,
-                "Coherence": coherence_evaluator
-            },
-            azure_ai_project=azure_ai_project,
-            output_path="./qa_flow_quality_eval.json"
-        )
-    except Exception as e:
-        print(f"An error occurred during evaluation: {e}\n Retrying without reporting results in Azure AI Project.")
-        evaluate(
-            evaluation_name=f"{prefix} Quality Evaluation",
-            data=data,
-            evaluators={
-                "Fluency": fluency_evaluator,
-                "Groundedness": groundedness_evaluator,
-                "Relevance": relevance_evaluator,
-                "Coherence": coherence_evaluator
-            },
-            output_path="./qa_flow_quality_eval.json"
-        )        
+    evaluate(
+        evaluation_name=f"{prefix} Quality Evaluation",
+        data=data,
+        evaluators={
+            "Fluency": fluency_evaluator,
+            "Groundedness": groundedness_evaluator,
+            "Relevance": relevance_evaluator,
+            "Coherence": coherence_evaluator
+        },
+        azure_ai_project=azure_ai_project,
+        output_path="./qa_flow_quality_eval.json"
+    )
+
+    ai_project_endpoint= f"{os.environ.get('AZURE_LOCATION')}.api.azureml.ms/?tid={os.environ.get('AZURE_TENANT_ID')}/resourcegroups/{os.environ.get('AZURE_RESOURCE_GROUP')}/providers/Microsoft.MachineLearningServices/workspaces/{os.environ.get('AZUREAI_PROJECT_NAME')}"
+
+    ai_project_client = AIProjectClient(
+        endpoint=ai_project_endpoint,
+        subscription_id=os.environ.get("AZURE_SUBSCRIPTION_ID"),
+        resource_group_name=os.environ.get("AZURE_RESOURCE_GROUP"),
+        project_name=os.environ.get("AZUREAI_PROJECT_NAME"),
+        credential=DefaultAzureCredential()
+    )
+
+    ai_project_client.upload_file("./qa_flow_quality_eval.json")
 
 if __name__ == '__main__':
     import promptflow as pf
