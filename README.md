@@ -51,8 +51,9 @@ LLMOps 솔루션 액셀러레이터에 오신 것을 환영합니다! 이 프로
     ```
 ## How-to
 
-1. [Setting up a new Project](documentation/setup.md)
-2. [Delivering a new Feature](documentation/delivering_new_feature.md)
+1. [App 구조 이해](documentation/app-local.md)
+2. [Setting up a new Project](documentation/setup.md)
+3. [Delivering a new Feature](documentation/delivering_new_feature.md)
 
 ## Documentation
 
@@ -61,8 +62,8 @@ LLMOps 솔루션 액셀러레이터에 오신 것을 환영합니다! 이 프로
 1. [Repository Structure](documentation/repository_structure.md): 리포지토리 구조가 어떻게 구성되는지 설명합니다.
 2. [Git Workflow and Pipelines](documentation/git_workflow.md): 가속기에서 사용되는 Git 워크플로와 CI/CD 파이프라인에 대해 설명합니다.
 3. [Reference Architecture](documentation/reference_architecture.md): 이 가속기의 기반이 되는 레퍼런스 아키텍처입니다.
-1. [RAG Project Template](https://github.com/azure/llmops-project-template): 바로 사용할 수 있는 RAG 프로젝트 템플릿을 제공합니다.
-1. [LLM Project Roles](documentation/project_roles.md): LLM 프로젝트의 다양한 역할과 그 책임에 대해 자세히 설명합니다.
+4. [RAG Project Template](https://github.com/azure/llmops-project-template): 바로 사용할 수 있는 RAG 프로젝트 템플릿을 제공합니다.
+5. [LLM Project Roles](documentation/project_roles.md): LLM 프로젝트의 다양한 역할과 그 책임에 대해 자세히 설명합니다.
 
 ## Trademarks
 이 프로젝트에는 프로젝트, 제품 또는 서비스에 대한 상표 또는 로고가 포함될 수 있습니다. Microsoft 상표 또는 로고의 승인된 사용은 다음 사항을 따라야 합니다. 

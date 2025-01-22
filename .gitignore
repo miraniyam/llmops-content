@@ -157,3 +157,6 @@ cython_debug/
 .vscode/
 qa_flow_quality_eval.json
 responses.jsonl
+
+prompty-answer-score-eval.xlsx
+.DS_Store
