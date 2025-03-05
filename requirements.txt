@@ -6,7 +6,7 @@ promptflow==1.17.0
 promptflow[azure]==1.17.0
 promptflow-tools==1.4.0
 promptflow-evals==0.3.3
-azure-identity==1.16.1
+azure-identity==1.17.1
 pandas==2.2.2
 python-dotenv==1.0.1
 jsonlines==4.0.0
