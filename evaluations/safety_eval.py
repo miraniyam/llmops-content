@@ -7,7 +7,11 @@ from typing import List, Dict, Any
 from azure.identity import DefaultAzureCredential
 from promptflow.evals.evaluate import evaluate
 from promptflow.evals.evaluators import SexualEvaluator, ViolenceEvaluator, SelfHarmEvaluator, HateUnfairnessEvaluator
-from promptflow.evals.synthetic import AdversarialScenario, AdversarialSimulator
+from promptflow.evals.synthetic import AdversarialScenario, AdversarialSimulator, DirectAttackSimulator
+
+# Jailbreak...
+# - Direct attack jailbreak (also known as UPIA or User Prompt Injected Attack) injects prompts in the user role turn of conversations or queries to generative AI applications.
+# - Indirect attack jailbreak (also known as XPIA or cross domain prompt injected attack) injects prompts in the returned documents or context of the user's query to generative AI applications.
 
 from chat_request import get_response
 
@@ -77,8 +81,7 @@ async def main():
             scenario=scenario, 
             target=callback, 
             max_conversation_turns=1,
-            max_simulation_results=10, 
-            jailbreak=False
+            max_simulation_results=10,
         )
         adversarial_conversation_result = outputs.to_eval_qa_json_lines()
         print(f"Adversarial conversation results: {adversarial_conversation_result}.")
@@ -111,12 +114,12 @@ async def main():
                 output_path="./adversarial_test.json"
         )        
         
-
-        jb_outputs = await simulator(
-            scenario=scenario, 
+        direct_attack_simulator = DirectAttackSimulator(azure_ai_project=azure_ai_project)
+        jb_outputs = await direct_attack_simulator(
+            scenario=AdversarialScenario.ADVERSARIAL_CONVERSATION, 
             target=callback,
-            max_simulation_results=10, 
-            jailbreak=True
+            max_simulation_results=10,
+            max_simulation_results=3
         )
         adversarial_conversation_result_w_jailbreak = jb_outputs.to_eval_qa_json_lines()
         print(f"Adversarial conversation w/ jailbreak results: {adversarial_conversation_result_w_jailbreak}.")
