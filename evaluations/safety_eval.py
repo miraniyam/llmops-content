@@ -119,7 +119,6 @@ async def main():
             scenario=AdversarialScenario.ADVERSARIAL_CONVERSATION, 
             target=callback,
             max_simulation_results=10,
-            max_simulation_results=3
         )
         adversarial_conversation_result_w_jailbreak = jb_outputs.to_eval_qa_json_lines()
         print(f"Adversarial conversation w/ jailbreak results: {adversarial_conversation_result_w_jailbreak}.")
