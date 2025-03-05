@@ -5,7 +5,7 @@
 ![Header](media/llmopsheader.png)
 
 > [!Important]
-> **특징**
+> **특징 **
 > * Forked from https://github.com/Azure/llmops
 > * Github 프로젝트 템플릿 방식에서 Fork 방식으로 단순화
 > * 각 파이프라인 에서 인프라 프로비저닝 부문 분리
