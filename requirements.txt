@@ -1,4 +1,4 @@
-azure-ai-ml==1.19.0
+azure-ai-ml==1.25.0
 azure-ai-resources==1.0.0b8
 azure-search-documents==11.4.0
 azure-ai-projects==1.0.0b5
