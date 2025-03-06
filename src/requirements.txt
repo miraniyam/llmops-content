@@ -1,4 +1,4 @@
-azure-identity==1.17.1
+azure-identity==1.16.1
 azure-search-documents==11.4.0
 promptflow==1.17.0
 promptflow[azure]==1.17.0
